@@ -1,0 +1,6 @@
+@POS.API_HostAddress = http://localhost:5004
+
+GET {{POS.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
