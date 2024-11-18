@@ -13,8 +13,13 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
     rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
     {
         options.Window = TimeSpan.FromSeconds(10);
-        options.PermitLimit = 2;
+        options.PermitLimit = 3;
     });
+});
+
+builder.Services.AddOutputCache(options =>
+{
+    options.AddPolicy("customPolicy", builder => builder.Expire(TimeSpan.FromSeconds(20)));
 });
 
 builder.Services.AddCors(options =>
@@ -34,6 +39,8 @@ var app = builder.Build();
 app.UseCors("MyAllowSpecificOrigins");
 
 app.UseRateLimiter();
+
+app.UseOutputCache();
 
 app.MapReverseProxy();
 
