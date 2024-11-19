@@ -8,18 +8,18 @@ builder.Services
    .AddReverseProxy()
    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
-builder.Services.AddRateLimiter(rateLimiterOptions =>
-{
-    rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
-    {
-        options.Window = TimeSpan.FromSeconds(10);
-        options.PermitLimit = 3;
-    });
-});
+//builder.Services.AddRateLimiter(rateLimiterOptions =>
+//{
+//    rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
+//    {
+//        options.Window = TimeSpan.FromSeconds(10);
+//        options.PermitLimit = 2;
+//    });
+//});
 
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy("customPolicy", builder => builder.Expire(TimeSpan.FromSeconds(20)));
+    options.AddPolicy("customPolicy", builder => builder.Expire(TimeSpan.FromSeconds(60)));
 });
 
 builder.Services.AddCors(options =>
@@ -38,10 +38,10 @@ var app = builder.Build();
 
 app.UseCors("MyAllowSpecificOrigins");
 
-app.UseRateLimiter();
+//app.UseRateLimiter();
 
 app.UseOutputCache();
 
-app.MapReverseProxy();
+app.MapReverseProxy().CacheOutput();
 
 app.Run();
