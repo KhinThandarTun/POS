@@ -18,7 +18,6 @@ namespace POS.API.Controllers
         }
 
         [HttpGet("by/{id}")]
-        [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any)]
         public IActionResult GetProductById(string id)
         {
             var products = _context.Products.FirstOrDefault(x => x.ProductId == id);
