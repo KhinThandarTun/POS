@@ -20,3 +20,10 @@ docker build -t pos-api:latest --file ./POS.API/Dockerfile .
 docker run -d --name pos-api -p 5001:80 pos-api:latest
 ```
 
+The following code-block will be rendered as a Mermaid diagram:
+
+```mermaid
+flowchart LR
+  A --> B
+```
+
