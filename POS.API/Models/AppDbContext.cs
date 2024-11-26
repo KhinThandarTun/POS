@@ -21,8 +21,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=192.168.7.16;Database=PointOfSale;User ID=sa;Password=123;TrustServerCertificate=True;");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    => optionsBuilder.UseSqlServer("Server=192.168.7.16;Database=PointOfSale;User ID=sa;Password=123;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
