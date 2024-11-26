@@ -2,7 +2,9 @@
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using POS.API.Models;
+using System.IO;
 
 namespace POS.API.Controllers
 {
@@ -12,7 +14,7 @@ namespace POS.API.Controllers
     {
         private readonly AppDbContext _context = context;
 
-        [HttpPost]
+        [HttpPost("import")]
         public async Task<IActionResult> ExcelImport(IFormFile file)
         {
             if (file is null || file.Length == 0)
@@ -55,6 +57,39 @@ namespace POS.API.Controllers
                 }
             }
             return purchases;
+        }
+
+
+        [HttpGet("export")]
+        public async Task<IActionResult> GenerateExcelFile()
+        {
+            var purchases = await _context.Purchases.ToListAsync();
+            using (var workbook = new XLWorkbook()) 
+            {
+                var worksheet = workbook.AddWorksheet("Purchase");
+
+                //Add header row
+                worksheet.Row(1).Cell(1).Value = "PurchaseVno";
+                worksheet.Row(1).Cell(2).Value = "SupplierId";
+                worksheet.Row(1).Cell(3).Value = "TotalAmt";
+
+                //Add Rows
+                for (int i = 0; i < purchases.Count; i++)
+                { 
+                    worksheet.Cell(i + 2, 1).Value = purchases[i].PurchaseVno;
+                    worksheet.Cell(i + 2, 2).Value = purchases[i].SupplierId;
+                    worksheet.Cell(i + 2, 3).Value = purchases[i].TotalAmt;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    stream.Position = 0;
+                    return File(stream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
+                        "Purchase.xlsx");
+                }
+            }
         }
     }
 }
