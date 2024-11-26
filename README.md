@@ -22,8 +22,14 @@ docker run -d --name pos-api -p 5001:80 pos-api:latest
 
 The following code-block will be rendered as a Mermaid diagram:
 
+## Testing Mermaid
+
 ```mermaid
 flowchart LR
   A --> B
 ```
+
+flowchart
+    id["This ❤ Unicode"]
+
 
