@@ -20,16 +20,12 @@ docker build -t pos-api:latest --file ./POS.API/Dockerfile .
 docker run -d --name pos-api -p 5001:80 pos-api:latest
 ```
 
-The following code-block will be rendered as a Mermaid diagram:
-
-## Testing Mermaid
-
-```mermaid
-flowchart LR
-  A --> B
+```
+docker run -d --name upload-api -p 5001:80 -e "ASPNETCORE_ENVIRONMENT=Development" -e TZ=Asia/Yangon --mount type=bind,source=C:/my-folder,target=/app/wwwroot/uploads --rm upload-api:latest
 ```
 
-flowchart
-    id["This ❤ Unicode"]
+```
+docker run -d --name upload-api -p 5001:80 -e "ASPNETCORE_ENVIRONMENT=Development" -e TZ=Asia/Yangon --rm -v image-uploads:/app/wwwroot/uploads --mount type=bind,source=C:\my-folder,target=/app/wwwroot/uploads upload-api:latest
+```
 
 
