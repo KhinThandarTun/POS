@@ -20,6 +20,8 @@ docker build -t pos-api:latest --file ./POS.API/Dockerfile .
 docker run -d --name pos-api -p 5001:80 pos-api:latest
 ```
 
+## Upload Image Store Mount in Docker
+
 ```
 docker run -d --name upload-api -p 5001:80 -e "ASPNETCORE_ENVIRONMENT=Development" -e TZ=Asia/Yangon --mount type=bind,source=C:/my-folder,target=/app/wwwroot/uploads --rm upload-api:latest
 ```
@@ -38,6 +40,16 @@ docker run -d --name dev_qf_ms_customer_api -p 5020:80 -e "ASPNETCORE_ENVIRONMEN
 
 ```
 RUN mkdir -p /app/wwwroot/images/kyc_verify && chmod -R 777 /app/wwwroot/images/kyc_verify
+```
+
+## Docker Image
+```
+docker build -t dev_qf_ms_customer_api:dev --file ./src/Microservices/QuickFood.Microservices.CustomerAPI/Dockerfile .
+```
+
+## Container Including Mount
+```
+docker run -d --name dev_qf_ms_customer_api -p 5020:80 -e "ASPNETCORE_ENVIRONMENT=Development" -e TZ=Asia/Yangon --mount type=bind,source=C:\kyc_verify,target=/app/wwwroot/images/kyc_verify -v web-logs:/app/logs dev_qf_ms_customer_api:dev
 ```
 
 
