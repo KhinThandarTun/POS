@@ -42,6 +42,10 @@ docker run -d --name dev_qf_ms_customer_api -p 5020:80 -e "ASPNETCORE_ENVIRONMEN
 RUN mkdir -p /app/wwwroot/images/kyc_verify && chmod -R 777 /app/wwwroot/images/kyc_verify
 ```
 
+```
+RUN mkdir -p /app/wwwroot/images/credit_request && chmod -R 777 /app/wwwroot/images/credit_request
+```
+
 ## Docker Image
 ```
 docker build -t dev_qf_ms_customer_api:dev --file ./src/Microservices/QuickFood.Microservices.CustomerAPI/Dockerfile .
