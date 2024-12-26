@@ -56,4 +56,9 @@ docker build -t dev_qf_ms_customer_api:dev --file ./src/Microservices/QuickFood.
 docker run -d --name dev_qf_ms_customer_api -p 5020:80 -e "ASPNETCORE_ENVIRONMENT=Development" -e TZ=Asia/Yangon --mount type=bind,source=C:\kyc_verify,target=/app/wwwroot/images/kyc_verify -v web-logs:/app/logs dev_qf_ms_customer_api:dev
 ```
 
+## Project Scaffold
+```
+dotnet ef dbcontext scaffold "Server=.;Database=DotNetTrainingBatch4;User ID=sa;Password=sasa@123;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -c AppDbContext -f --project path/to/YourProject.csproj
+```
+
 
